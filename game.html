@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>game 1</title>
+    </head>
+    <body>
+        <canvas id="id-canvas" width="400" height="300"></canvas>
+<script type="text/javascript">
+var canvas = document.querySelector('#id-canvas')
+var context = canvas.getContext('2d')
+var img = new Image()
+img.src = 'paddle.PNG'
+img.onload = function() {
+    context.drawImage(img, 0, 0)
+}
+</script>>
+    </body>
+</html>
