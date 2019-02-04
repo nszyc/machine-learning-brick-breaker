@@ -1,5 +1,5 @@
 var __main = function() {
-    var game = Game()
+    var game = Game(30)
     var paddle = Paddle()
     var ball = Ball()
 

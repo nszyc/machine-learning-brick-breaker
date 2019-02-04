@@ -1,4 +1,4 @@
-var Game = function() {
+var Game = function(fps) {
     var canvas = document.querySelector('#id-canvas')
     var context = canvas.getContext('2d')
     var o = {
@@ -44,6 +44,6 @@ var Game = function() {
         o.context.clearRect(0, 0, canvas.width, canvas.height)
 
         o.draw()
-    }, (1000 / 30))
+    }, (1000 / fps))
     return o
 }
