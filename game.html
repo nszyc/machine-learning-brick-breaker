@@ -85,11 +85,24 @@ var Ball = function() {
         image: image,
         x: 0,
         y: 0,
-        speedX: 10,
-        speedY: 10,
+        speedX: 5,
+        speedY: 5,
+        fired: false,
     }
     o.move = function() {
-        log('move')
+        if (o.fired) {
+            if (o.x < 0 || o.x > 400) {
+                o.speedX *= -1
+            }
+            if (o.y < 0 || o.y > 300) {
+                o.speedY *= -1
+            }
+            o.x += o.speedX
+            o.y += o.speedY
+        }
+    }
+    o.fire = function() {
+        o.fired = true
     }
     return o
 }
@@ -104,6 +117,9 @@ var __main = function() {
     })
     game.registerAction('d', function() {
         paddle.moveRight()
+    })
+    game.registerAction('k', function() {
+        ball.fire()
     })
 
     game.update = function() {
