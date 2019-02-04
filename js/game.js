@@ -22,12 +22,14 @@ var Game = function(fps) {
         o.actions[key] = callback
     }
 
-    window.addEventListener('keyup', function(event) {
-        var k = event.key
-        if (k == 'p') {
-            o.paused = !o.paused
-        }
-    })
+    if (global_isInDebugMode) {
+        window.addEventListener('keyup', function(event) {
+            var k = event.key
+            if (k == 'p') {
+                o.paused = !o.paused
+            }
+        })
+    }
 
     setInterval(function() {
         var keys = Object.keys(o.actions)

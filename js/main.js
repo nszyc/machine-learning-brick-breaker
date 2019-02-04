@@ -27,14 +27,16 @@ var __main = function() {
         ball.fire()
     })
 
-    window.addEventListener('keyup', function(event) {
-        var k = event.key
-        if (k == '1') {
-            bricks = loadLevel(1)
-        } else if (k == '2') {
-            bricks = loadLevel(2)
-        }
-    })
+    if (global_isInDebugMode) {
+        window.addEventListener('keyup', function(event) {
+            var k = event.key
+            if (k == '1') {
+                bricks = loadLevel(1)
+            } else if (k == '2') {
+                bricks = loadLevel(2)
+            }
+        })
+    }
 
     game.update = function() {
         if (game.paused) {
