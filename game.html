@@ -22,6 +22,25 @@ var imageFromPath = function(path) {
     return img
 }
 
+var rectCollide = function(a, b) {
+    var x1 = a.x
+    var y1 = a.y
+    var w1 = a.image.width
+    var h1 = a.image.height
+
+    var x2 = b.x
+    var y2 = b.y
+    var w2 = b.image.width
+    var h2 = b.image.height
+
+    if (abs((x1 + w1 * 0.5) - (x2 + w2 * 0.5)) <= (w1 * 0.5 + w2 * 0.5)) {
+        if (abs((y1 + h1 * 0.5) - (y2 + h2 * 0.5)) <= (h1 * 0.5 + h2 * 0.5)) {
+            return true
+        }
+    }
+    return false
+}
+
 var Game = function() {
     var canvas = document.querySelector('#id-canvas')
     var context = canvas.getContext('2d')
@@ -79,22 +98,7 @@ var Paddle = function() {
         o.x += o.speed
     }
     o.collide = function(ball) {
-        var x1 = o.x
-        var y1 = o.y
-        var w1 = o.image.width
-        var h1 = o.image.height
-
-        var x2 = ball.x
-        var y2 = ball.y
-        var w2 = ball.image.width
-        var h2 = ball.image.height
-
-        if (abs((x1 + w1 * 0.5) - (x2 + w2 * 0.5)) <= (w1 * 0.5 + w2 * 0.5)) {
-            if (abs((y1 + h1 * 0.5) - (y2 + h2 * 0.5)) <= (h1 * 0.5 + h2 * 0.5)) {
-                return true
-            }
-        }
-        return false
+        return rectCollide(o, ball)
     }
     return o
 }
@@ -130,10 +134,30 @@ var Ball = function() {
     return o
 }
 
+var Brick = function() {
+    var image = imageFromPath('brick.PNG')
+    var o = {
+        image: image,
+        x: 0,
+        y: 0,
+        alive: true,
+    }
+    o.kill = function() {
+        o.alive = false
+    }
+    o.collide = function(ball) {
+        return rectCollide(o, ball)
+    }
+    return o
+}
+
 var __main = function() {
     var game = Game()
     var paddle = Paddle()
     var ball = Ball()
+    var brick = Brick()
+
+    brick.y = 100
 
     game.registerAction('a', function() {
         paddle.moveLeft()
@@ -141,7 +165,7 @@ var __main = function() {
     game.registerAction('d', function() {
         paddle.moveRight()
     })
-    game.registerAction('k', function() {
+    game.registerAction('f', function() {
         ball.fire()
     })
 
@@ -150,11 +174,18 @@ var __main = function() {
         if (paddle.collide(ball)) {
             ball.bounce()
         }
+        if (brick.alive && brick.collide(ball)) {
+            brick.kill()
+            ball.bounce()
+        }
     }
 
     game.draw = function() {
         game.drawImage(paddle)
         game.drawImage(ball)
+        if (brick.alive) {
+            game.drawImage(brick)
+        }
     }
 }
 
