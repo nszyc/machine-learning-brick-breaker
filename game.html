@@ -20,6 +20,24 @@ var imageFromPath = function(path) {
     return img
 }
 
+var Game = function() {
+    var canvas = document.querySelector('#id-canvas')
+    var context = canvas.getContext('2d')
+
+    var o = {
+        context: context,
+    }
+    setInterval(function() {
+        o.update()
+
+        // clear
+        o.context.clearRect(0, 0, canvas.width, canvas.height)
+
+        o.draw()
+    }, (1000 / 30))
+    return o
+}
+
 var Paddle = function() {
     var image = imageFromPath('paddle.PNG')
     var o = {
@@ -38,9 +56,7 @@ var Paddle = function() {
 }
 
 var __main = function() {
-    var canvas = document.querySelector('#id-canvas')
-    var context = canvas.getContext('2d')
-
+    var game = Game()
     var paddle = Paddle()
 
     var leftDown = false
@@ -64,19 +80,17 @@ var __main = function() {
         }
     })
 
-    setInterval(function() {
-        // update
+    game.update = function() {
         if (leftDown) {
             paddle.moveLeft()
         } else if (rightDown) {
             paddle.moveRight()
         }
-        // clamp
+    }
 
-        // draw
-        context.clearRect(0, 0, canvas.width, canvas.height)
-        context.drawImage(paddle.image, paddle.x, paddle.y)
-    }, (1000 / 30))
+    game.draw = function() {
+        game.context.drawImage(paddle.image, paddle.x, paddle.y)
+    }
 }
 
 __main()
