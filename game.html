@@ -28,22 +28,18 @@ var Paddle = function() {
         y: 200,
         speed: 5,
     }
+    o.moveLeft = function() {
+        o.x -= o.speed
+    }
+    o.moveRight = function() {
+        o.x += o.speed
+    }
     return o
 }
 
 var __main = function() {
     var canvas = document.querySelector('#id-canvas')
     var context = canvas.getContext('2d')
-
-    // var x = 100
-    // var y = 200
-    // var speed = 5
-
-    // var img = new Image()
-    // img.src = 'paddle.PNG'
-    // img.onload = function() {
-    //     context.drawImage(img, x, y)
-    // }
 
     var paddle = Paddle()
 
@@ -69,13 +65,11 @@ var __main = function() {
     })
 
     setInterval(function() {
-        // update x
+        // update
         if (leftDown) {
-            // x -= speed
-            paddle.x -= paddle.speed
+            paddle.moveLeft()
         } else if (rightDown) {
-            // x += speed
-            paddle.x += paddle.speed
+            paddle.moveRight()
         }
         // clamp
 
