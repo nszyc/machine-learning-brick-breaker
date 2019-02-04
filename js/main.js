@@ -1,4 +1,6 @@
 var __main = function() {
+    var score = 0
+
     var game = Game(30)
     var paddle = Paddle()
     var ball = Ball()
@@ -47,6 +49,8 @@ var __main = function() {
             if (b.alive && b.collide(ball)) {
                 b.kill()
                 ball.bounce()
+                
+                score += 10
             }
         }
     }
@@ -61,6 +65,9 @@ var __main = function() {
                 game.drawImage(b)
             }
         }
+
+        game.context.font = '15px serif'
+        game.context.fillText('score: ' + score, 10, 250)
     }
 }
 
