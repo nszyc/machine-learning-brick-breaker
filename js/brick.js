@@ -1,9 +1,9 @@
-var Brick = function() {
+var Brick = function(property) {
     var image = imageFromPath('image/brick.PNG')
     var o = {
         image: image,
-        x: 0,
-        y: 0,
+        x: property[0],
+        y: property[1],
         alive: true,
     }
     o.kill = function() {

@@ -1,15 +1,21 @@
+var loadLevel = function(n) {
+    n = n - 1
+    var brickProperties = levels[n]
+    var bricks = []
+    for (var i = brickProperties.length - 1; i >= 0; i--) {
+        var property = brickProperties[i]
+        var brick = Brick(property)
+        bricks.push(brick)
+    }
+    return bricks
+}
+
 var __main = function() {
     var game = Game(30)
     var paddle = Paddle()
     var ball = Ball()
 
-    var bricks = []
-    for (var i = 2; i >= 0; i--) {
-        var b = Brick()
-        b.x = 20 + 120 * i
-        b.y = 100
-        bricks.push(b)
-    }
+    var bricks = loadLevel(2)
 
     game.registerAction('a', function() {
         paddle.moveLeft()
@@ -19,6 +25,15 @@ var __main = function() {
     })
     game.registerAction('f', function() {
         ball.fire()
+    })
+
+    window.addEventListener('keyup', function(event) {
+        var k = event.key
+        if (k == '1') {
+            bricks = loadLevel(1)
+        } else if (k == '2') {
+            bricks = loadLevel(2)
+        }
     })
 
     game.update = function() {
