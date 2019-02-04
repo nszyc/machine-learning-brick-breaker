@@ -1,4 +1,4 @@
-var Game = function(fps) {
+var Game = function() {
     var canvas = document.querySelector('#id-canvas')
     var context = canvas.getContext('2d')
     var o = {
@@ -31,7 +31,17 @@ var Game = function(fps) {
         })
     }
 
-    setInterval(function() {
+    o.update = function() {
+        
+    }
+
+    o.draw = function() {
+        
+    }
+
+    window.fps = 60
+    
+    var runloop = function() {
         var keys = Object.keys(o.actions)
         for (var i = 0; i < keys.length; i++) {
             var key = keys[i]
@@ -46,6 +56,10 @@ var Game = function(fps) {
         o.context.clearRect(0, 0, canvas.width, canvas.height)
 
         o.draw()
-    }, (1000 / fps))
+
+        setTimeout(runloop, 1000 / window.fps)    
+    }
+    runloop()
+
     return o
 }
