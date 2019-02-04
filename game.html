@@ -48,6 +48,7 @@ var Game = function() {
         context: context,
         actions: {},
         keydowns: {},
+        paused: false,
     }
 
     o.drawImage = function(objectWithImage) {
@@ -63,6 +64,13 @@ var Game = function() {
     o.registerAction = function(key, callback) {
         o.actions[key] = callback
     }
+
+    window.addEventListener('keyup', function(event) {
+        var k = event.key
+        if (k == 'p') {
+            o.paused = !o.paused
+        }
+    })
 
     setInterval(function() {
         var keys = Object.keys(o.actions)
@@ -184,6 +192,10 @@ var __main = function() {
     })
 
     game.update = function() {
+        if (game.paused) {
+            return
+        }
+
         ball.move()
         if (paddle.collide(ball)) {
             ball.bounce()
