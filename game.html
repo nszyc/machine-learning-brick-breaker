@@ -164,9 +164,14 @@ var __main = function() {
     var game = Game()
     var paddle = Paddle()
     var ball = Ball()
-    var brick = Brick()
 
-    brick.y = 100
+    var bricks = []
+    for (var i = 2; i >= 0; i--) {
+        var b = Brick()
+        b.x = 20 + 120 * i
+        b.y = 100
+        bricks.push(b)
+    }
 
     game.registerAction('a', function() {
         paddle.moveLeft()
@@ -183,17 +188,25 @@ var __main = function() {
         if (paddle.collide(ball)) {
             ball.bounce()
         }
-        if (brick.alive && brick.collide(ball)) {
-            brick.kill()
-            ball.bounce()
+
+        for (var i = bricks.length - 1; i >= 0; i--) {
+            var b = bricks[i]
+            if (b.alive && b.collide(ball)) {
+                b.kill()
+                ball.bounce()
+            }
         }
     }
 
     game.draw = function() {
         game.drawImage(paddle)
         game.drawImage(ball)
-        if (brick.alive) {
-            game.drawImage(brick)
+
+        for (var i = bricks.length - 1; i >= 0; i--) {
+            var b = bricks[i]
+            if (b.alive) {
+                game.drawImage(b)
+            }
         }
     }
 }
