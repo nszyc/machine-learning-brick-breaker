@@ -29,6 +29,10 @@ var Game = function() {
         keydowns: {},
     }
 
+    o.drawImage = function(objectWithImage) {
+        o.context.drawImage(objectWithImage.image, objectWithImage.x, objectWithImage.y)
+    }
+
     window.addEventListener('keydown', function(event) {
         o.keydowns[event.key] = true
     })
@@ -38,7 +42,6 @@ var Game = function() {
     o.registerAction = function(key, callback) {
         o.actions[key] = callback
     }
-
 
     setInterval(function() {
         var keys = Object.keys(o.actions)
@@ -92,7 +95,7 @@ var __main = function() {
     }
 
     game.draw = function() {
-        game.context.drawImage(paddle.image, paddle.x, paddle.y)
+        game.drawImage(paddle)
     }
 }
 
