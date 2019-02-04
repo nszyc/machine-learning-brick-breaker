@@ -2,8 +2,8 @@ var Paddle = function() {
     var image = imageFromPath('image/paddle.PNG')
     var o = {
         image: image,
-        x: 100,
-        y: 200,
+        x: 200 - 159 * 0.5,
+        y: 300 - 19,
         speed: 5,
     }
     o.move = function(x) {

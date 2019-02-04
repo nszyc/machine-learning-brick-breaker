@@ -2,7 +2,9 @@ var __main = function() {
     var score = 0
 
     var game = Game(30)
+
     var paddle = Paddle()
+
     var ball = Ball()
 
     var bricks = loadLevel(2)
@@ -40,16 +42,32 @@ var __main = function() {
         }
 
         ball.move()
-        if (paddle.collide(ball)) {
-            ball.bounce()
+
+        if (ball.next().y >= 300) {
+            log('game over')
+            return
+        }
+
+        if (ball.next().x <= 0 || ball.next().x >= 400) {
+            ball.speedX *= -1
+        }
+        if (ball.next().y <= 0 || ball.next().y >= 300) {
+            ball.speedY *= -1
+        }
+
+        if (paddle.collide(ball.next())) {
+            if (ball.x + ball.image.width <= paddle.x || ball.x >= paddle.x + paddle.image.width) {
+                ball.speedX *= -1
+            } else {
+                ball.speedY *= -1
+            }
         }
 
         for (var i = bricks.length - 1; i >= 0; i--) {
             var b = bricks[i]
-            if (b.alive && b.collide(ball)) {
+            if (b.alive && b.collide(ball.next())) {
                 b.kill()
-                ball.bounce()
-                
+                ball.speedY *= -1
                 score += 10
             }
         }

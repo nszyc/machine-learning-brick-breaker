@@ -10,21 +10,19 @@ var Ball = function() {
     }
     o.move = function() {
         if (o.fired) {
-            if (o.x < 0 || o.x > 400) {
-                o.speedX *= -1
-            }
-            if (o.y < 0 || o.y > 300) {
-                o.speedY *= -1
-            }
             o.x += o.speedX
             o.y += o.speedY
         }
     }
+    o.next = function() {
+        var n = Ball()
+        n.x = o.x + o.speedX * 1.5
+        n.y = o.y + o.speedY * 1.5
+        n.image = o.image
+        return n
+    }
     o.fire = function() {
         o.fired = true
-    }
-    o.bounce = function() {
-        o.speedY *= -1
     }
     return o
 }
