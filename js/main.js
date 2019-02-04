@@ -24,6 +24,10 @@ var __main = function() {
                 bricks = loadLevel(2)
             }
         })
+
+        document.querySelector('#input-range-fps').addEventListener('input', function(event) {
+            window.fps = Number(event.target.value)
+        })
     }
 
     game.update = function() {
