@@ -25,7 +25,9 @@ var __main = function() {
             }
         })
 
-        document.querySelector('#input-range-fps').addEventListener('input', function(event) {
+        var fpsSlider = document.querySelector('#input-range-fps')
+        fpsSlider.hidden = false
+        fpsSlider.addEventListener('input', function(event) {
             window.fps = Number(event.target.value)
         })
     }
