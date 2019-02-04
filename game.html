@@ -14,53 +14,78 @@
 <script type="text/javascript">
 var log = console.log.bind(console)
 
-var canvas = document.querySelector('#id-canvas')
-var context = canvas.getContext('2d')
-
-var x = 100
-var y = 200
-var speed = 5
-
-var img = new Image()
-img.src = 'paddle.PNG'
-img.onload = function() {
-    context.drawImage(img, x, y)
+var imageFromPath = function(path) {
+    var img = new Image()
+    img.src = path
+    return img
 }
 
-var leftDown = false
-var rightDown = false
-
-window.addEventListener('keydown', function(event) {
-    var k = event.key
-    if (k == 'a') {
-        leftDown = true
-    } else if (k == 'd') {
-        rightDown = true
+var Paddle = function() {
+    var image = imageFromPath('paddle.PNG')
+    var o = {
+        image: image,
+        x: 100,
+        y: 200,
+        speed: 5,
     }
-})
+    return o
+}
 
-window.addEventListener('keyup', function(event) {
-    var k = event.key
-    if (k == 'a') {
-        leftDown = false
-    } else if (k == 'd') {
-        rightDown = false
-    }
-})
+var __main = function() {
+    var canvas = document.querySelector('#id-canvas')
+    var context = canvas.getContext('2d')
 
-setInterval(function() {
-    // update x
-    if (leftDown) {
-        x -= speed
-    } else if (rightDown) {
-        x += speed
-    }
-    // clamp
+    // var x = 100
+    // var y = 200
+    // var speed = 5
 
-    // draw
-    context.clearRect(0, 0, canvas.width, canvas.height)
-    context.drawImage(img, x, y)
-}, (1000 / 30))
+    // var img = new Image()
+    // img.src = 'paddle.PNG'
+    // img.onload = function() {
+    //     context.drawImage(img, x, y)
+    // }
+
+    var paddle = Paddle()
+
+    var leftDown = false
+    var rightDown = false
+
+    window.addEventListener('keydown', function(event) {
+        var k = event.key
+        if (k == 'a') {
+            leftDown = true
+        } else if (k == 'd') {
+            rightDown = true
+        }
+    })
+
+    window.addEventListener('keyup', function(event) {
+        var k = event.key
+        if (k == 'a') {
+            leftDown = false
+        } else if (k == 'd') {
+            rightDown = false
+        }
+    })
+
+    setInterval(function() {
+        // update x
+        if (leftDown) {
+            // x -= speed
+            paddle.x -= paddle.speed
+        } else if (rightDown) {
+            // x += speed
+            paddle.x += paddle.speed
+        }
+        // clamp
+
+        // draw
+        context.clearRect(0, 0, canvas.width, canvas.height)
+        context.drawImage(paddle.image, paddle.x, paddle.y)
+    }, (1000 / 30))
+}
+
+__main()
 </script>
     </body>
 </html>
