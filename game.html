@@ -14,6 +14,8 @@
 <script type="text/javascript">
 var log = console.log.bind(console)
 
+var abs = Math.abs.bind(Math)
+
 var imageFromPath = function(path) {
     var img = new Image()
     img.src = path
@@ -76,6 +78,24 @@ var Paddle = function() {
     o.moveRight = function() {
         o.x += o.speed
     }
+    o.collide = function(ball) {
+        var x1 = o.x
+        var y1 = o.y
+        var w1 = o.image.width
+        var h1 = o.image.height
+
+        var x2 = ball.x
+        var y2 = ball.y
+        var w2 = ball.image.width
+        var h2 = ball.image.height
+
+        if (abs((x1 + w1 * 0.5) - (x2 + w2 * 0.5)) <= (w1 * 0.5 + w2 * 0.5)) {
+            if (abs((y1 + h1 * 0.5) - (y2 + h2 * 0.5)) <= (h1 * 0.5 + h2 * 0.5)) {
+                return true
+            }
+        }
+        return false
+    }
     return o
 }
 
@@ -104,6 +124,9 @@ var Ball = function() {
     o.fire = function() {
         o.fired = true
     }
+    o.bounce = function() {
+        o.speedY *= -1
+    }
     return o
 }
 
@@ -124,6 +147,9 @@ var __main = function() {
 
     game.update = function() {
         ball.move()
+        if (paddle.collide(ball)) {
+            ball.bounce()
+        }
     }
 
     game.draw = function() {
