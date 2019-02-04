@@ -1,5 +1,5 @@
 var Brick = function(property) {
-    var image = imageFromPath('image/brick.PNG')
+    var image = imageByName('brick')
     var o = {
         image: image,
         x: property[0],

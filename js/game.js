@@ -1,3 +1,9 @@
+var global_images = {}
+
+var imageByName = function(name) {
+    return global_images[name]
+}
+
 var Game = function() {
     var canvas = document.querySelector('#id-canvas')
     var context = canvas.getContext('2d')
@@ -59,6 +65,7 @@ var Game = function() {
 
         setTimeout(runloop, 1000 / window.fps)    
     }
+
     runloop()
 
     return o
