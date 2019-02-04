@@ -79,9 +79,25 @@ var Paddle = function() {
     return o
 }
 
+var Ball = function() {
+    var image = imageFromPath('ball.PNG')
+    var o = {
+        image: image,
+        x: 0,
+        y: 0,
+        speedX: 10,
+        speedY: 10,
+    }
+    o.move = function() {
+        log('move')
+    }
+    return o
+}
+
 var __main = function() {
     var game = Game()
     var paddle = Paddle()
+    var ball = Ball()
 
     game.registerAction('a', function() {
         paddle.moveLeft()
@@ -91,11 +107,12 @@ var __main = function() {
     })
 
     game.update = function() {
-
+        ball.move()
     }
 
     game.draw = function() {
         game.drawImage(paddle)
+        game.drawImage(ball)
     }
 }
 
