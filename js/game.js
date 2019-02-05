@@ -8,6 +8,7 @@ var Game = function() {
     var canvas = document.querySelector('#id-canvas')
     var context = canvas.getContext('2d')
     var o = {
+        canvas: canvas,
         context: context,
         actions: {},
         keydowns: {},

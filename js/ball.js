@@ -24,5 +24,10 @@ var Ball = function() {
     o.fire = function() {
         o.fired = true
     }
+    o.hasPoint = function(x, y) {
+        var xIn = (x >= o.x) && (x <= o.x + o.image.width)
+        var yIn = (y >= o.y) && (y <= o.y + o.image.height)
+        return xIn && yIn
+    }
     return o
 }

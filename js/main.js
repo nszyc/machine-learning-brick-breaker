@@ -34,6 +34,26 @@ var __main = function() {
         fpsSlider.addEventListener('input', function(event) {
             window.fps = Number(event.target.value)
         })
+
+        var enableDrag = false
+        game.canvas.addEventListener('mousedown', function(event) {
+            var x = event.offsetX
+            var y = event.offsetY
+            if (ball.hasPoint(x, y)) {
+                enableDrag = true
+            }
+        })
+        game.canvas.addEventListener('mousemove', function(event) {
+            if (enableDrag) {
+                var x = event.offsetX
+                var y = event.offsetY
+                ball.x = x
+                ball.y = y
+            }
+        })
+        game.canvas.addEventListener('mouseup', function(event) {
+            enableDrag = false
+        })
     }
 
     game.update = function() {
