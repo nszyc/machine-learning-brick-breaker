@@ -2,12 +2,6 @@ var log = console.log.bind(console)
 
 var abs = Math.abs.bind(Math)
 
-var imageFromPath = function(path) {
-    var img = new Image()
-    img.src = path
-    return img
-}
-
 var rectCollide = function(a, b) {
     var x1 = a.x
     var y1 = a.y
