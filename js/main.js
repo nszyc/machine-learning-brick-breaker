@@ -1,8 +1,8 @@
 var __main = function() {
     var game = Game()
 
-    var startScene = GameStartScene(game)
-    game.loadScene(startScene)
+    var playScene = new PlayScene(game)
+    game.loadScene(playScene)
 }
 
 var imageNamesAndPaths = {
