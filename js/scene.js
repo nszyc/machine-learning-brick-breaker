@@ -81,7 +81,8 @@ var Scene = function(game) {
         ball.move()
 
         if (ball.next().y >= 300) {
-            log('game over')
+            var gameOverScene = GameOverScene(game)
+            game.loadScene(gameOverScene)
             return
         }
 
