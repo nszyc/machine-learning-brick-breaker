@@ -21,7 +21,7 @@ class PlayScene extends Scene {
         })
 
         if (global_isInDebugMode) {
-            window.addEventListener('keyup', function(event) {
+            window.addEventListener('keyup', (event) => {
                 var k = event.key
                 if (k == '1') {
                     this.bricks = loadLevel(1)
@@ -32,19 +32,19 @@ class PlayScene extends Scene {
 
             var fpsSlider = document.querySelector('#input-range-fps')
             fpsSlider.hidden = false
-            fpsSlider.addEventListener('input', function(event) {
+            fpsSlider.addEventListener('input', (event) => {
                 window.fps = Number(event.target.value)
             })
 
             var enableDrag = false
-            this.game.canvas.addEventListener('mousedown', function(event) {
+            this.game.canvas.addEventListener('mousedown', (event) => {
                 var x = event.offsetX
                 var y = event.offsetY
                 if (this.ball.hasPoint(x, y)) {
                     enableDrag = true
                 }
             })
-            this.game.canvas.addEventListener('mousemove', function(event) {
+            this.game.canvas.addEventListener('mousemove', (event) => {
                 if (enableDrag) {
                     var x = event.offsetX
                     var y = event.offsetY
@@ -52,7 +52,7 @@ class PlayScene extends Scene {
                     this.ball.y = y
                 }
             })
-            this.game.canvas.addEventListener('mouseup', function(event) {
+            this.game.canvas.addEventListener('mouseup', (event) => {
                 enableDrag = false
             })
         }

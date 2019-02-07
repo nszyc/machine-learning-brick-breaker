@@ -2,7 +2,7 @@ class StartScene extends Scene {
     constructor(game) {
         super(game)
 
-        this.game.registerAction('k', function() {
+        this.game.registerAction('k', () => {
             var playScene = new PlayScene(this.game)
             this.game.loadScene(playScene)
         })
