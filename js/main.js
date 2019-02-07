@@ -2,14 +2,7 @@ var __main = function() {
     var game = Game()
 
     var scene = Scene(game)
-
-    game.update = function() {
-        scene.update()
-    }
-
-    game.draw = function() {
-        scene.draw()
-    }
+    game.loadScene(scene)
 }
 
 var imageNamesAndPaths = {

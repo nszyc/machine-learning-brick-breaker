@@ -13,6 +13,7 @@ var Game = function() {
         actions: {},
         keydowns: {},
         paused: false,
+        scene: null,
     }
 
     o.drawImage = function(objectWithImage) {
@@ -38,12 +39,16 @@ var Game = function() {
         })
     }
 
+    o.loadScene = function(scene) {
+        o.scene = scene
+    }
+
     o.update = function() {
-        
+        o.scene && o.scene.update()
     }
 
     o.draw = function() {
-        
+        o.scene && o.scene.draw()
     }
 
     window.fps = 60
