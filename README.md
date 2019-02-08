@@ -1,5 +1,7 @@
 # machine-learning-brick-breaker
 
+用遗传算法和神经网络来玩打砖块游戏
+
 部分代码和想法来自 https://github.com/ssusnic/Machine-Learning-Flappy-Bird
 
 # 运行方法
