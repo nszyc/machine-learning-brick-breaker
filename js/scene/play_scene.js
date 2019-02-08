@@ -56,6 +56,16 @@ class PlayScene extends Scene {
                 enableDrag = false
             })
         }
+
+        if (global_isInAIMode) {
+            this.GA = new GeneticAlgorithm()
+            this.GA.reset()
+            this.GA.createPopulation()
+            this.setupAllPaddleStatus()
+            this.geneticContinue()
+            
+            this.ball.fire()
+        }
     }
     draw() {
         this.game.drawImage(this.paddle)
@@ -79,9 +89,31 @@ class PlayScene extends Scene {
         this.ball.move()
 
         if (this.ball.next().y >= 300) {
-            var endScene = new EndScene(this.game)
-            this.game.loadScene(endScene)
+            if (global_isInAIMode) {
+
+                this.paddleStatus[this.paddle.index].live = false
+
+                log('game over info')
+                log('iteration' + ' ' + this.GA.iteration)
+                log('index' + ' ' + this.paddle.index)
+
+                this.GA.Population[this.paddle.index].fitness = this.collideTimes
+
+                this.paddle = Paddle()
+                this.ball = Ball()
+                this.ball.fire()
+                this.geneticContinue()
+            } else {
+                var endScene = new EndScene(this.game)
+                this.game.loadScene(endScene)
+            }
             return
+        }
+
+        if (global_isInAIMode) {
+            if (this.paddleStatus[this.paddle.index].live) {
+                this.GA.activateBrain(this.paddle, this.ball)
+            }
         }
 
         if (this.ball.next().x <= 0 || this.ball.next().x >= 400) {
@@ -97,6 +129,8 @@ class PlayScene extends Scene {
             } else {
                 this.ball.speedY *= -1
             }
+
+            this.collideTimes++
         }
 
         for (var i = this.bricks.length - 1; i >= 0; i--) {
@@ -106,6 +140,41 @@ class PlayScene extends Scene {
                 this.ball.speedY *= -1
                 this.score += 10
             }
+        }
+    }
+    setupAllPaddleStatus() {
+        this.paddleStatus = []
+        for (var i = 0; i < 10; i++) {
+            var s = {
+                index: i,
+                live: true,
+            }
+            this.paddleStatus.push(s)
+        }
+    }
+    pickOneLiveStatus() {
+        for (var i = 0; i < 10; i++) {
+            var s = this.paddleStatus[i]
+            if (s.live) {
+                return s
+            }
+        }
+        return null
+    }
+    geneticContinue() {
+        this.collideTimes = 0
+
+        var status = this.pickOneLiveStatus()
+        if (status == null) {
+            this.setupAllPaddleStatus()
+            this.paddle.index = 0
+
+            this.GA.evolvePopulation();
+            this.GA.iteration++;
+            log('evolve info')
+            log('iteration' + ' ' + this.GA.iteration)
+        } else {
+            this.paddle.index = status.index
         }
     }
 }
