@@ -1,8 +1,7 @@
 var GeneticAlgorithm = function() {
     this.max_units = 10
-    this.top_units = 4
+    this.top_units = 2
     this.Population = []
-    this.SCALE_FACTOR = 200
 }
 
 GeneticAlgorithm.prototype = {
@@ -11,7 +10,6 @@ GeneticAlgorithm.prototype = {
         this.mutateRate = 1
         this.best_population = 0
         this.best_fitness = 0
-        this.best_score = 0
     },
     createPopulation: function() {
         this.Population.splice(0, this.Population.length)
@@ -19,15 +17,15 @@ GeneticAlgorithm.prototype = {
             var newUnit = new synaptic.Architect.Perceptron(2, 6, 1)
             newUnit.index = i
             newUnit.fitness = 0
-            newUnit.score = 0
             newUnit.isWinner = false
             this.Population.push(newUnit)
         }
     },
     activateBrain: function(paddle, ball) {
-        var paddleX = this.normalize(paddle.x, 400 - paddle.imageDrawWidth) * this.SCALE_FACTOR
-        var ballX = this.normalize(ball.x, 400 - ball.imageDrawWidth) * this.SCALE_FACTOR
-        var ballY = this.normalize(ball.y, 300 - ball.imageDrawHeight) * this.SCALE_FACTOR
+        var SCALE_FACTOR = 200
+        var paddleX = this.normalize(paddle.x, 400 - paddle.imageDrawWidth) * SCALE_FACTOR
+        var ballX = this.normalize(ball.x, 400 - ball.imageDrawWidth) * SCALE_FACTOR
+        var ballY = this.normalize(ball.y, 300 - ball.imageDrawHeight) * SCALE_FACTOR
         var inputs = [paddleX, ballX, ballY]
         var outputs = this.Population[paddle.index].activate(inputs)
         if (outputs[0] > 0.5) {
@@ -38,7 +36,7 @@ GeneticAlgorithm.prototype = {
     },
 
     // evolves the population by performing selection, crossover and mutations on the units
-    evolvePopulation : function(){
+    evolvePopulation : function() {
         log('debug', this.Population)
         // select the top units of the current population to get an array of winners
         // (they will be copied to the next population)
@@ -54,17 +52,17 @@ GeneticAlgorithm.prototype = {
         }
             
         // fill the rest of the next population with new units using crossover and mutation
-        for (var i=this.top_units; i<this.max_units; i++){
+        for (var i=this.top_units; i<this.max_units; i++) {
             var parentA, parentB, offspring;
                 
-            if (i == this.top_units){
+            if (i == this.top_units) {
                 // offspring is made by a crossover of two best winners
                 parentA = Winners[0].toJSON();
                 parentB = Winners[1].toJSON();
 
                 offspring = this.crossOver(parentA, parentB);
 
-            } else if (i < this.max_units-2){
+            } else if (i < this.max_units-2) {
                 // offspring is made by a crossover of two random winners
                 parentA = this.getRandomUnit(Winners).toJSON();
                 parentB = this.getRandomUnit(Winners).toJSON();
@@ -82,7 +80,6 @@ GeneticAlgorithm.prototype = {
             var newUnit = synaptic.Network.fromJSON(offspring);
             newUnit.index = this.Population[i].index;
             newUnit.fitness = 0;
-            newUnit.score = 0;
             newUnit.isWinner = false;
             
             // update population by changing the old unit with the new one
@@ -90,14 +87,13 @@ GeneticAlgorithm.prototype = {
         }
         
         // if the top winner has the best fitness in the history, store its achievement!
-        if (Winners[0].fitness > this.best_fitness){
+        if (Winners[0].fitness > this.best_fitness) {
             this.best_population = this.iteration;
             this.best_fitness = Winners[0].fitness;
-            this.best_score = Winners[0].score;
         }
         
         // sort the units of the new population in ascending order by their index
-        this.Population.sort(function(unitA, unitB){
+        this.Population.sort(function(unitA, unitB) {
             return unitA.index - unitB.index;
         });
     },
@@ -145,7 +141,7 @@ GeneticAlgorithm.prototype = {
     },
     
     // mutates a gene
-    mutate : function (gene){
+    mutate : function (gene) {
         if (Math.random() < this.mutateRate) {
             var mutateFactor = 1 + ((Math.random() - 0.5) * 3 + (Math.random() - 0.5));
             gene *= mutateFactor;
@@ -154,11 +150,11 @@ GeneticAlgorithm.prototype = {
         return gene;
     },
     
-    random : function(min, max){
+    random : function(min, max) {
         return Math.floor(Math.random()*(max-min+1) + min);
     },
     
-    getRandomUnit : function(array){
+    getRandomUnit : function(array) {
         return array[this.random(0, array.length-1)];
     },
 
