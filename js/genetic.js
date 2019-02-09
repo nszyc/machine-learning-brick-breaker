@@ -37,7 +37,6 @@ GeneticAlgorithm.prototype = {
 
     // evolves the population by performing selection, crossover and mutations on the units
     evolvePopulation : function() {
-        log('debug', this.Population)
         // select the top units of the current population to get an array of winners
         // (they will be copied to the next population)
         var Winners = this.selection();

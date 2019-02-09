@@ -96,9 +96,9 @@ class PlayScene extends Scene {
 
                 this.paddleStatus[this.paddle.index].live = false
 
-                log('game over info')
-                log('iteration' + ' ' + this.GA.iteration)
                 log('index' + ' ' + this.paddle.index)
+                log('collideTimes' + ' ' + this.collideTimes)
+                log('')
 
                 this.GA.Population[this.paddle.index].fitness = this.collideTimes
 
@@ -176,6 +176,7 @@ class PlayScene extends Scene {
             this.GA.iteration++;
             log('evolve info')
             log('iteration' + ' ' + this.GA.iteration)
+            log('')
         } else {
             this.paddle.index = status.index
         }
