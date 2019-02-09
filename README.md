@@ -2,7 +2,7 @@
 
 用遗传算法和神经网络来玩打砖块游戏
 
-
+![](https://github.com/nszyc/machine-learning-brick-breaker/blob/master/Screen%20Shot.png)
 
 部分代码和想法来自 https://github.com/ssusnic/Machine-Learning-Flappy-Bird
 
