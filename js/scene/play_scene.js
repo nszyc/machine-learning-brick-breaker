@@ -68,6 +68,9 @@ class PlayScene extends Scene {
         }
     }
     draw() {
+        this.game.context.fillStyle = 'rgb(255, 255, 225)'
+        this.game.context.fillRect(0, 0, this.game.canvas.width, this.game.canvas.height)
+
         this.game.drawImage(this.paddle)
         this.game.drawImage(this.ball)
 
