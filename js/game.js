@@ -52,7 +52,7 @@ var Game = function() {
         o.scene && o.scene.draw()
     }
 
-    window.fps = 60
+    window.fps = 20
     
     var runloop = function() {
         var keys = Object.keys(o.actions)
