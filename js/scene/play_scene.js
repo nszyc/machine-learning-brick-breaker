@@ -124,7 +124,7 @@ class PlayScene extends Scene {
         }
 
         if (this.paddle.collide(this.ball.next())) {
-            if (this.ball.x + this.ball.image.width <= this.paddle.x || this.ball.x >= this.paddle.x + this.paddle.image.width) {
+            if (this.ball.x + this.ball.imageDrawWidth <= this.paddle.x || this.ball.x >= this.paddle.x + this.paddle.imageDrawWidth) {
                 this.ball.speedX *= -1
             } else {
                 this.ball.speedY *= -1

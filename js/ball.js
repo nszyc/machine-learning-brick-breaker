@@ -7,6 +7,8 @@ var Ball = function() {
         speedX: 5,
         speedY: 5,
         fired: false,
+        imageDrawWidth: 30,
+        imageDrawHeight: 30,
     }
     o.move = function() {
         if (o.fired) {
@@ -25,8 +27,8 @@ var Ball = function() {
         o.fired = true
     }
     o.hasPoint = function(x, y) {
-        var xIn = (x >= o.x) && (x <= o.x + o.image.width)
-        var yIn = (y >= o.y) && (y <= o.y + o.image.height)
+        var xIn = (x >= o.x) && (x <= o.x + o.imageDrawWidth)
+        var yIn = (y >= o.y) && (y <= o.y + o.imageDrawHeight)
         return xIn && yIn
     }
     return o

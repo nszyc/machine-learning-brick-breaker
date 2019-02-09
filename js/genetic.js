@@ -25,9 +25,9 @@ GeneticAlgorithm.prototype = {
         }
     },
     activateBrain: function(paddle, ball) {
-        var paddleX = this.normalize(paddle.x, 400 - paddle.image.width) * this.SCALE_FACTOR
-        var ballX = this.normalize(ball.x, 400 - ball.image.width) * this.SCALE_FACTOR
-        var ballY = this.normalize(ball.y, 300 - ball.image.height) * this.SCALE_FACTOR
+        var paddleX = this.normalize(paddle.x, 400 - paddle.imageDrawWidth) * this.SCALE_FACTOR
+        var ballX = this.normalize(ball.x, 400 - ball.imageDrawWidth) * this.SCALE_FACTOR
+        var ballY = this.normalize(ball.y, 300 - ball.imageDrawHeight) * this.SCALE_FACTOR
         var inputs = [paddleX, ballX, ballY]
         var outputs = this.Population[paddle.index].activate(inputs)
         if (outputs[0] > 0.5) {

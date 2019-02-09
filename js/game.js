@@ -17,7 +17,8 @@ var Game = function() {
     }
 
     o.drawImage = function(objectWithImage) {
-        o.context.drawImage(objectWithImage.image, objectWithImage.x, objectWithImage.y)
+        var obj = objectWithImage
+        o.context.drawImage(obj.image, obj.x, obj.y, obj.imageDrawWidth, obj.imageDrawHeight)
     }
 
     window.addEventListener('keydown', function(event) {

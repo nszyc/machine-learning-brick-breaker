@@ -5,6 +5,8 @@ var Brick = function(property) {
         x: property[0],
         y: property[1],
         alive: true,
+        imageDrawWidth: 100,
+        imageDrawHeight: 30,
     }
     o.kill = function() {
         o.alive = false
