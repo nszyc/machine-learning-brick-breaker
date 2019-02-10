@@ -30,10 +30,15 @@ class PlayScene extends Scene {
                 }
             })
 
+            var fpsText = document.querySelector('#id-text-fps')
+            fpsText.hidden = false
+            fpsText.innerHTML = 'fps:' + ' ' + window.fps
+
             var fpsSlider = document.querySelector('#input-range-fps')
             fpsSlider.hidden = false
             fpsSlider.addEventListener('input', (event) => {
                 window.fps = Number(event.target.value)
+                fpsText.innerHTML = 'fps:' + ' ' + window.fps
             })
 
             var enableDrag = false
