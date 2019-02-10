@@ -62,8 +62,7 @@ class PlayScene extends Scene {
             this.GA.reset()
             this.GA.createPopulation()
             this.setupAllPaddleStatus()
-            this.geneticContinue()
-            
+            this.setupPaddleNewStatus()
             this.ball.fire()
         }
     }
@@ -93,7 +92,6 @@ class PlayScene extends Scene {
 
         if (this.ball.next().y >= 300) {
             if (global_isInAIMode) {
-
                 this.paddleStatus[this.paddle.index].live = false
 
                 log('index' + ' ' + this.paddle.index)
@@ -105,7 +103,16 @@ class PlayScene extends Scene {
                 this.paddle = Paddle()
                 this.ball = Ball()
                 this.ball.fire()
-                this.geneticContinue()
+
+                if (this.AllStatusDeath()) {
+                    this.setupAllPaddleStatus()
+                    this.GA.evolvePopulation();
+                    this.GA.iteration++;
+                    log('evolve info')
+                    log('iteration' + ' ' + this.GA.iteration)
+                    log('')
+                }
+                this.setupPaddleNewStatus()
             } else {
                 var endScene = new EndScene(this.game)
                 this.game.loadScene(endScene)
@@ -164,21 +171,18 @@ class PlayScene extends Scene {
         }
         return null
     }
-    geneticContinue() {
-        this.collideTimes = 0
-
-        var status = this.pickOneLiveStatus()
-        if (status == null) {
-            this.setupAllPaddleStatus()
-            this.paddle.index = 0
-
-            this.GA.evolvePopulation();
-            this.GA.iteration++;
-            log('evolve info')
-            log('iteration' + ' ' + this.GA.iteration)
-            log('')
-        } else {
-            this.paddle.index = status.index
+    AllStatusDeath() {
+        for (var i = 0; i < 10; i++) {
+            var s = this.paddleStatus[i]
+            if (s.live) {
+                return false
+            }
         }
+        return true
+    }
+    setupPaddleNewStatus() {
+        var status = this.pickOneLiveStatus()
+        this.paddle.index = status.index
+        this.collideTimes = 0
     }
 }
